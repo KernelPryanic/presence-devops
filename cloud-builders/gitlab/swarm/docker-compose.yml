@@ -1,0 +1,75 @@
+version: "3.7"
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ee:$GITLAB_VERSION
+    ports:
+      - target: 80
+        published: 80
+        mode: host
+      - target: 443
+        published: 443
+        mode: host
+    networks:
+      - gitlab
+    volumes:
+      - $GITLAB_HOME/data:/var/opt/gitlab
+      - $GITLAB_HOME/logs:/var/log/gitlab
+      - $GITLAB_HOME/config:/etc/gitlab
+    environment:
+      GITLAB_OMNIBUS_CONFIG: "from_file('/omnibus_config.rb')"
+    configs:
+      - source: gitlab
+        target: /omnibus_config.rb
+    secrets:
+      - gitlab_root_password
+      - gitlab_runner_token
+    healthcheck:
+      test: ["CMD", "curl", "-fL", "http://localhost/-/readiness"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 4m30s
+  gitlab-runner:
+    image: gitlab/gitlab-runner:$GITLAB_RUNNER_VERSION
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./config.toml:/etc/gitlab-runner/config.toml
+    depends_on:
+      - gitlab
+    deploy:
+      mode: replicated
+      replicas: 2
+
+volumes:
+  gitlab_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: "$GITLAB_HOME/data"
+  gitlab_logs:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: "$GITLAB_HOME/gitlab/logs"
+  gitlab_config:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: "$GITLAB_HOME/gitlab/config"
+
+configs:
+  gitlab:
+    file: ./gitlab.rb
+secrets:
+  gitlab_root_password:
+    file: ./root_password.txt
+  gitlab_runner_token:
+    file: ./runner_token.txt
+
+networks:
+  gitlab:

@@ -1,0 +1,11 @@
+# In this directory, run the following command to build this builder.
+# $ gcloud builds submit . --config=cloudbuild.yaml
+
+steps:
+  - name: "gcr.io/presence-game/packer"
+    args:
+      - build
+      - -debug
+      - -var-file
+      - variables.pkrvars.hcl
+      - build.pkr.hcl
