@@ -2,21 +2,34 @@ resource "google_compute_address" "static" {
   name = "presence"
 }
 
+resource "google_compute_firewall" "custom_ssh" {
+  name    = "custom-ssh-firewall"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["2222"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["custom-ssh"]
+}
+
 resource "google_compute_firewall" "web" {
- name    = "web-firewall"
- network = "default"
+  name    = "web-firewall"
+  network = "default"
 
- allow {
-   protocol = "icmp"
- }
+  allow {
+    protocol = "icmp"
+  }
 
- allow {
-   protocol = "tcp"
-   ports    = ["80", "443"]
- }
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
 
- source_ranges = ["0.0.0.0/0"]
- target_tags = ["web"]
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["web"]
 }
 
 # resource "google_dns_managed_zone" "main" {

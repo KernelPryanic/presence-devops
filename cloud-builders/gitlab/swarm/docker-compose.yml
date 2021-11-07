@@ -4,6 +4,9 @@ services:
   gitlab:
     image: gitlab/gitlab-ee:$GITLAB_VERSION
     ports:
+      - target: 22
+        published: 22
+        mode: host
       - target: 80
         published: 80
         mode: host
@@ -29,7 +32,7 @@ services:
       interval: 1m
       timeout: 10s
       retries: 3
-      start_period: 4m30s
+      start_period: 5m5s
   gitlab-runner:
     image: gitlab/gitlab-runner:$GITLAB_RUNNER_VERSION
     privileged: true

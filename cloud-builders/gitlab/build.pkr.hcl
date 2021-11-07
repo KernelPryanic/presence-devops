@@ -59,7 +59,8 @@ build {
 
   provisioner "shell" {
     inline = [
-      "apt-get install net-tools"
+      "apt-get install net-tools",
+      "sed -i 's/#Port 22/Port 2222/g' /etc/ssh/sshd_config"
     ]
   }
 

@@ -8,7 +8,7 @@ resource "google_compute_instance" "gitlab" {
   machine_type = var.machine_type
   zone         = "europe-west4-c"
 
-  tags = ["cicd", "gitlab", "web"]
+  tags = ["cicd", "gitlab", "web", "custom-ssh"]
 
   boot_disk {
     initialize_params {
