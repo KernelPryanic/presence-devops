@@ -29,7 +29,7 @@ resource "google_compute_instance" "gitlab" {
   }
 
   metadata_startup_script = <<-EOT
-    if [[ $(blkid /dev/disk/by-id/google-gitlab) == "" ]]
+    if [[ $(lsblk -f /dev/disk/by-id/google-gitlab | awk '{print $2}' | tail -1) != "ext4" ]]
     then
       mkfs.ext4 /dev/disk/by-id/google-gitlab
     fi
