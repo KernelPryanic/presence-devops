@@ -27,3 +27,7 @@ override.tf.json
 
 # Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
 # example: *tfplan*
+
+cloud-builders/gitlab/swarm/config.toml
+cloud-builders/gitlab/swarm/root_password.txt
+cloud-builders/gitlab/swarm/runner_token.txt

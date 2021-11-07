@@ -1,0 +1,24 @@
+--- certificate_orig.rb	2021-11-06 20:36:01.198000000 +0100
++++ certificate.rb	2021-11-06 20:36:08.096601280 +0100
+@@ -38,21 +38,6 @@
+     end
+   end
+ 
+-  acme_certificate 'staging' do
+-    alt_names new_resource.alt_names unless new_resource.alt_names.empty?
+-    key_size new_resource.key_size unless new_resource.key_size.nil?
+-    group new_resource.group unless new_resource.group.nil?
+-    owner new_resource.owner unless new_resource.owner.nil?
+-    chain "#{new_resource.chain}-staging" unless new_resource.chain.nil?
+-    contact contact_info
+-    crt "#{new_resource.crt}-staging"
+-    cn new_resource.cn
+-    key "#{new_resource.key}-staging"
+-    dir new_resource.acme_staging_endpoint
+-    wwwroot new_resource.wwwroot
+-    sensitive true
+-  end
+-
+   ruby_block 'reset private key' do
+     block do
+       node.normal['acme']['private_key'] = nil
