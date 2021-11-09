@@ -16,9 +16,9 @@ services:
     networks:
       - gitlab
     volumes:
-      - $GITLAB_HOME/data:/var/opt/gitlab
-      - $GITLAB_HOME/logs:/var/log/gitlab
-      - $GITLAB_HOME/config:/etc/gitlab
+      - gitlab_data:/var/opt/gitlab
+      - gitlab_logs:/var/log/gitlab
+      - gitlab_config:/etc/gitlab
     environment:
       GITLAB_OMNIBUS_CONFIG: "from_file('/omnibus_config.rb')"
     configs:
@@ -57,13 +57,13 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: "$GITLAB_HOME/gitlab/logs"
+      device: "$GITLAB_HOME/logs"
   gitlab_config:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: "$GITLAB_HOME/gitlab/config"
+      device: "$GITLAB_HOME/config"
 
 configs:
   gitlab:

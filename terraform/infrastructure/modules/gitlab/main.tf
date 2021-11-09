@@ -29,15 +29,16 @@ resource "google_compute_instance" "gitlab" {
   }
 
   metadata_startup_script = <<-EOT
-    function makefs {
+    if [ ! -f /.ran-startup-script ]
+    then
+      touch /.ran-startup-script
       if [[ $(lsblk -f /dev/disk/by-id/google-gitlab | awk '{print $2}' | tail -1) != "ext4" ]]
       then
         mkfs.ext4 /dev/disk/by-id/google-gitlab
+        e2label /dev/disk/by-id/google-gitlab gitlab
       fi
-    }
-    trap makefs ERR
-
-    umount ${var.gitlab_home} || /bin/true
+    fi
+    mkdir -p ${var.gitlab_home}
     mount -o discard,defaults /dev/disk/by-id/google-gitlab ${var.gitlab_home}
     mkdir -p ${var.gitlab_home}/{data,logs,config}
   EOT
