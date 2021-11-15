@@ -21,12 +21,15 @@ terraform {
 
 module "persistent" {
   source = "./persistent"
+
+  disk_size     = var.gitlab_disk_size
+  disk_snapshot = var.gitlab_disk_snapshot
 }
 
 module "infrastructure" {
   source = "./infrastructure"
 
-  machine_type = var.machine_type
   external_ip_address = module.persistent.external_ip_address.address
-  gitlab_home = var.gitlab_home
+  gitlab_machine_type = var.gitlab_machine_type
+  gitlab_home         = var.gitlab_home
 }

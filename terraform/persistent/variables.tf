@@ -2,10 +2,14 @@ variable "project" {
   default = "presence-game"
 }
 
-variable "zone" {
+variable "disk_zone" {
   default = "europe-west4-c"
 }
 
-variable "size" {
+variable "disk_size" {
   default = 128
+}
+
+variable "disk_snapshot" {
+  default = null
 }

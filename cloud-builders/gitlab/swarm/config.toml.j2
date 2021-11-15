@@ -5,7 +5,7 @@ check_interval = 0
   session_timeout = 1800
 
 [[runners]]
-  url = "http://gitlab.presence.icu/"
+  url = "https://gitlab.presence.icu/"
   token = {{ runner_token }}
   executor = "shell"
   [runners.custom_build_dir]
@@ -15,7 +15,7 @@ check_interval = 0
     [runners.cache.azure]
 
 [[runners]]
-  url = "http://gitlab.presence.icu/"
+  url = "https://gitlab.presence.icu/"
   token = {{ runner_token }}
   executor = "docker"
   [runners.custom_build_dir]

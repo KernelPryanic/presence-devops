@@ -9,3 +9,7 @@ variable "zone" {
 variable "size" {
   default = null
 }
+
+variable "snapshot" {
+  default = null
+}

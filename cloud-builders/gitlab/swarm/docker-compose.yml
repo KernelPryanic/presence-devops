@@ -33,17 +33,17 @@ services:
       timeout: 10s
       retries: 3
       start_period: 5m5s
-  gitlab-runner:
-    image: gitlab/gitlab-runner:$GITLAB_RUNNER_VERSION
-    privileged: true
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./config.toml:/etc/gitlab-runner/config.toml
-    depends_on:
-      - gitlab
-    deploy:
-      mode: replicated
-      replicas: 2
+  # gitlab-runner:
+  #   image: gitlab/gitlab-runner:$GITLAB_RUNNER_VERSION
+  #   privileged: true
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - ./config.toml:/etc/gitlab-runner/config.toml
+  #   depends_on:
+  #     - gitlab
+  #   deploy:
+  #     mode: replicated
+  #     replicas: 2
 
 volumes:
   gitlab_data:

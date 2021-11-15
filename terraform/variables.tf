@@ -6,8 +6,16 @@ variable "region" {
   default = "europe-west4"
 }
 
-variable "machine_type" {
+variable "gitlab_machine_type" {
   default = "n1-standard-2"
+}
+
+variable "gitlab_disk_size" {
+  default = 250
+}
+
+variable "gitlab_disk_snapshot" {
+  default = null
 }
 
 variable "gitlab_home" {
