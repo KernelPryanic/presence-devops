@@ -11,7 +11,7 @@ variable "gitlab_machine_type" {
 }
 
 variable "gitlab_disk_size" {
-  default = 250
+  default = 300
 }
 
 variable "gitlab_disk_snapshot" {
